@@ -54,7 +54,7 @@ def control():
 	rospy.init_node('ev3_ctrl', anonymous=True)
 	rospy.Subscriber('/cmd_vel', Twist, callback)
 
-	# Obtain encoder measurements #
+	# TODO: Obtain encoder measurements and publish msg
 
 	r_pub.publish(encoder_data)
 	l_pub.publish(encoder_data)
