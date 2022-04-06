@@ -1,5 +1,5 @@
-#!/usr/bin/env python3  Line 1
-# -*- coding: utf-8 -*- Line 2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 #----------------------------------------------------------------------------
 # Created By  : Jayson De La Vega
 # Created Date: 4/5/22
