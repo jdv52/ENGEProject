@@ -12,7 +12,7 @@
 import rospy
 from std_msgs.msg import Int16
 from geometry_msgs.msg import Twist
-from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_B
+from ev3dev2.motor import MoveTank, OUTPUT_A, OUTPUT_B
 
 # TODO: Measure and adjust these values
 WHEEL_DISTANCE 1
@@ -49,7 +49,8 @@ def callback(data):
 	left_speed = (linear_vel - WHEEL_DISTANCE * angular_vel) / WHEEL_RAD 
 	right_speed = (linear_vel + WHEEL_DISTANCE * angular_vel) / WHEEL_RAD
 	
-	#TODO: remap "speed" values to percentages of maximum wheel speed
+	# TODO: remap "speed" values to percentages of maximum wheel speed
+	# TODO: drive motor at resulting speed percentage
 
 def control():
 	"""
