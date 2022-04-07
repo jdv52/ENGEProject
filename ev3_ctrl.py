@@ -14,13 +14,19 @@ from std_msgs.msg import Int16
 from geometry_msgs.msg import Twist
 from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_B
 
+# TODO: Measure and adjust these values
+WHEEL_DISTANCE 1
+WHEEL_RAD 1
+
 # ROS nodes to publish left and right motor encoder ticks
 r_pub = rospy.Publisher('/right_ticks', Int16)
 l_pub = rospy.Publisher('/left_ticks', Int16)
 
-encoder_data = 0
+right_motor = LargeMotor(OUTPUT_A)
+left_motor = LargeMoror(OUTPUT_B)
+right_wheel_ticks = 0
+left_wheel_ticks  = 0
 
-# TODO: write algorithm to calculate motor speeds from twist message
 def callback(data):
 	"""
 	Callback function for subscriber node receiving data
@@ -36,6 +42,14 @@ def callback(data):
 		Message with two 3D Vectors defining linear and angular velocity.
 
 	"""
+	linear_vel = data.linear.x
+	angular_vel = data.angular.z
+	
+	# Algorithm based on kinematic model of non-holonomic 2-wheeled robot
+	left_speed = (linear_vel - WHEEL_DISTANCE * angular_vel) / WHEEL_RAD 
+	right_speed = (linear_vel + WHEEL_DISTANCE * angular_vel) / WHEEL_RAD
+	
+	#TODO: remap "speed" values to percentages of maximum wheel speed
 
 def control():
 	"""
@@ -54,10 +68,8 @@ def control():
 	rospy.init_node('ev3_ctrl', anonymous=True)
 	rospy.Subscriber('/cmd_vel', Twist, callback)
 
-	# TODO: Obtain encoder measurements and publish msg
-
-	r_pub.publish(encoder_data)
-	l_pub.publish(encoder_data)
+	r_pub.publish(right_motor.position)
+	l_pub.publish(left_motor.position)
 
 	rospy.spin()
 
