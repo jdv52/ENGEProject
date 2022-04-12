@@ -1,1 +1,0 @@
-<node pkg="navigation_pkg" type="goal_pos_set" name="goal_pos_set"></node>
