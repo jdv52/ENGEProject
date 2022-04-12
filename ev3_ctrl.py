@@ -27,7 +27,7 @@ left_motor = LargeMoror(OUTPUT_B)
 right_wheel_ticks = 0
 left_wheel_ticks  = 0
 
-def callback(data):
+'''def callback(data):
 	"""
 	Callback function for subscriber node receiving data
 
@@ -50,7 +50,7 @@ def callback(data):
 	right_speed = (linear_vel + WHEEL_DISTANCE * angular_vel) / WHEEL_RAD
 	
 	# TODO: remap "speed" values to percentages of maximum wheel speed
-	# TODO: drive motor at resulting speed percentage
+	# TODO: drive motor at resulting speed percentage '''
 
 def control():
 	"""
@@ -67,7 +67,7 @@ def control():
 
 	"""
 	rospy.init_node('ev3_ctrl', anonymous=True)
-	rospy.Subscriber('/cmd_vel', Twist, callback)
+	# rospy.Subscriber('/cmd_vel', Twist, callback) 
 
 	r_pub.publish(right_motor.position)
 	l_pub.publish(left_motor.position)
