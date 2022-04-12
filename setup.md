@@ -11,7 +11,15 @@
 ## Set up EV3
   - Follow ev3dev's [Getting Started](https://www.ev3dev.org/docs/getting-started/) tutorial to prepare the EV3.
   - Follow [this tutorial](https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/) to allow the EV3 to connect to wifi via USB tethering to the Raspberry Pi.
-  - SSH into the EV3 and install ROS (exact packages that need to be installed are TBD)
+  - SSH into the EV3 by running
+  ```
+  ssh robot@ev3dev.local
+  ```
+  - Run:
+  ```
+  sudo apt udpate
+  sudo apt install unzip bzip2 build-essential
+  ```
 
 ## Running the Application
   - Navigate to the catkin_ws directory and run the provided shell script (Not yet available).
