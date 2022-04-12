@@ -138,7 +138,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(goal_pos_set src/goal_pos_set.cpp)
+add_executable(odom_pub src/odom_pub.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,7 +153,7 @@ add_executable(goal_pos_set src/goal_pos_set.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
 # ${PROJECT_NAME}_node
-  goal_pos_set
+  odom_pub
   ${catkin_LIBRARIES}
 )
 
