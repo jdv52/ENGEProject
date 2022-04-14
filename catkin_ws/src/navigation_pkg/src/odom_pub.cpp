@@ -70,6 +70,15 @@ void update_odom()
   current_pose.pose.pose.position.y = initial_pose.pose.pose.position.y + distance * sin(estimate_angle);
   current_pose.pose.pose.orientation.z = initial_pose.pose.pose.orientation.z + arc_angle;
 
+  if (isnan(current_pose.pose.pose.position.x) ||
+      isnan(current_pose.pose.pose.position.y) ||
+      isnan(current_pose.pose.pose.position.z))
+  {
+    current_pose.pose.pose.position.x = initial_pose.pose.pose.position.x;
+    current_pose.pose.pose.position.y = initial_pose.pose.pose.position.y;
+    current_pose.pose.pose.position.z = initial_pose.pose.pose.position.z;
+  }
+  
   // Calculate linear and angular velocity based on time elapsed since last reading
   current_pose.header.stamp = ros::Time::now();
   long dt = current_pose.header.stamp.toSec() - initial_pose.header.stamp.toSec();
