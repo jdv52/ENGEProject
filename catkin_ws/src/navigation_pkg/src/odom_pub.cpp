@@ -78,11 +78,11 @@ void update_odom()
     current_pose.pose.pose.position.y = initial_pose.pose.pose.position.y;
     current_pose.pose.pose.position.z = initial_pose.pose.pose.position.z;
   }
-  
+
   // Calculate linear and angular velocity based on time elapsed since last reading
   current_pose.header.stamp = ros::Time::now();
-  long dt = current_pose.header.stamp.toSec() - initial_pose.header.stamp.toSec();
-  current_pose.twist.twist.linear.x = distance / dt;
+  double dt = current_pose.header.stamp.toSec() - initial_pose.header.stamp.toSec();
+  current_pose.twist.twist.linear.x = distance / (current_pose.header.stamp.toSec() - initial_pose.header.stamp.toSec());
   current_pose.twist.twist.angular.z = arc_angle / dt;
 
   // Store current pose for next read
@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
   ros::Subscriber right_encoder_sub = node.subscribe("right_ticks", 100, calc_distance_right, ros::TransportHints().tcpNoDelay());
   ros::Subscriber left_encoder_sub = node.subscribe("left_ticks", 100, calc_distance_left, ros::TransportHints().tcpNoDelay());
   odom_pub = node.advertise<nav_msgs::Odometry>("odom_data", 100);
-  ros::Rate loop_rate(30);
+  ros::Rate loop_rate(10);
 
   while(ros::ok()) {
     update_odom();
