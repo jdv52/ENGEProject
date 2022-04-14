@@ -10,10 +10,7 @@
     ```
     source devel/setup.bash
     ```
-  - Raspberry Pi setup is now complete and you should now be able to run roslaunch file (after sourcing the workspace) included in the workspace:
-    ```
-    roslaunch navigation_pkg nav_stack.launch
-    ```
+  - Raspberry Pi setup is now complete and you should now be able to run roslaunch file (after sourcing the workspace) included in the workspace (`roslaunch navigation_pkg nav_stack.launch`). At this point, this will do nothing because the node isn't receiving any encoder information from the robot, but running `rostopic list` does show that the node is publishing odometry messages and that the node is running.
 ## Set up EV3
   - Follow ev3dev's [Getting Started](https://www.ev3dev.org/docs/getting-started/) tutorial to flash the EV3 with the ev3dev image.
   - Follow [this tutorial](https://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/) to allow the EV3 to connect to wifi via USB tethering to the Raspberry Pi.
@@ -59,5 +56,11 @@
     ```
     source ~/ros_catkin_ws/install_isolated/setup.bash
     ```
+    For convenience you can write this command to .bashrc with:
+    ```
+    echo "source ~/ros_catkin_ws/install_isolated/setup.bash" >> ~/.bashrc
+    ```
+    With this command the system will automatically source the workspace everytime you open a new shell.
 ## Running the Application
-  - Make sure to source the appropriate workspaces on both the EV3 and the Raspberry Pi
+  - TODO
+    
