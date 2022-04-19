@@ -1,50 +1,48 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pybricks-micropython
 # -*- coding: utf-8 -*-
 #----------------------------------------------------------------------------
 # Created By  : Jayson De La Vega
 # Created Date: 4/5/22
 # version = '1.0'
 # ---------------------------------------------------------------------------
-""" This program defines a ROS publisher and subscribe node """
+""" This program contains a control loop to run the EV3 brick """
 # ---------------------------------------------------------------------------
 # Imports
 # ---------------------------------------------------------------------------
-import rospy
-from std_msgs.msg import Int16
-from geometry_msgs.msg import Twist
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+from pybricks.media.ev3dev import SoundFile, ImageFile
 
-# TODO: Measure and adjust these values
-WHEEL_DISTANCE 1
-WHEEL_RAD 1
 
-# ROS nodes to publish left and right motor encoder ticks
-r_pub = rospy.Publisher('/right_ticks', Int16)
-l_pub = rospy.Publisher('/left_ticks', Int16)
+# This program requires LEGO EV3 MicroPython v2.0 or higher.
+# Click "Open user guide" on the EV3 extension tab for more information.
 
-def control():
-	"""
-	Initializes ROS node for low level control
 
-	Initializes a ROS subscriber and publisher node that publishes encoder data 
-	as an Int16 message. Encoder messages are passed to a Raspberry Pi connected
-	via USB to perform odometry calculations. Subscriber calls callback() when
-	it receives a message on the 'cmd_vel' topic.
+# Create your objects here.
+ev3 = EV3Brick()
+ir_sense = InfraredSensor(Port.S3)
+RightTank = Motor(Port.A)
+LeftTank = Motor(Port.B)
 
-	See Also
-	--------
-	callback(data) : Callback function for subscriber node receiving data
 
-	"""
-	rospy.init_node('ev3_ctrl', anonymous=True)
-	rate = rospy.Rate(10)
-
-	while not rospy.is_shutdoown():
-		r_pub.publish(right_motor.position)
-		l_pub.publish(left_motor.position)
-		rate.sleep()
-
-if __name__ == '__main__':
-	try:
-		control()
-	except rospy.ROSInterruptException:
-		pass
+# Write your program here.
+ev3.speaker.beep()
+while 1:
+    if Button.LEFT_UP in ir_sense.buttons(1):
+        LeftTank.dc(100)
+    elif Button.LEFT_DOWN in ir_sense.buttons(1):
+        LeftTank.dc(-100)
+    else:
+        LeftTank.stop()
+    
+    if Button.RIGHT_UP in ir_sense.buttons(1):
+        RightTank.dc(100)
+    elif Button.RIGHT_DOWN in ir_sense.buttons(1):
+        RightTank.dc(-100)
+    else:
+        RightTank.stop()
+    print(str(RightTank.angle()) + ', ' + str(LeftTank.angle()))
